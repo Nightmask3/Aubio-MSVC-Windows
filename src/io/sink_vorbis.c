@@ -94,7 +94,7 @@ aubio_sink_vorbis_t * new_aubio_sink_vorbis (const char_t *uri,
 
 failure:
   del_aubio_sink_vorbis(s);
-  return NULL;
+  return 0;
 }
 
 void del_aubio_sink_vorbis (aubio_sink_vorbis_t *s)
@@ -140,7 +140,7 @@ uint_t aubio_sink_vorbis_open(aubio_sink_vorbis_t *s)
   vorbis_block_init(&s->vd, &s->vb);
 
   // pick randome serial number
-  srand(time(NULL));
+  srand(time(0));
   ogg_stream_init(&s->os, rand());
 
   // write header
@@ -224,7 +224,7 @@ void aubio_sink_vorbis_write(aubio_sink_vorbis_t *s)
   // pre-analysis
   while (vorbis_analysis_blockout(&s->vd, &s->vb) == 1) {
 
-    vorbis_analysis(&s->vb, NULL);
+    vorbis_analysis(&s->vb, 0);
     vorbis_bitrate_addblock(&s->vb);
 
     while (vorbis_bitrate_flushpacket(&s->vd, &s->op))
@@ -307,7 +307,7 @@ uint_t aubio_sink_vorbis_close (aubio_sink_vorbis_t *s)
         s->path, errorstr);
     return AUBIO_FAIL;
   }
-  s->fid = NULL;
+  s->fid = 0;
   return AUBIO_OK;
 }
 

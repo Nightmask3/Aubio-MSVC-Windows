@@ -56,7 +56,7 @@ aubio_dct_ooura_t * new_aubio_dct_ooura (uint_t size) {
   return s;
 beach:
   AUBIO_FREE(s);
-  return NULL;
+  return 0;
 }
 
 void del_aubio_dct_ooura(aubio_dct_ooura_t *s) {

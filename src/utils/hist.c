@@ -45,7 +45,7 @@ aubio_hist_t * new_aubio_hist (smpl_t flow, smpl_t fhig, uint_t nelems){
   uint_t i;
   if ((sint_t)nelems <= 0) {
     AUBIO_FREE(s);
-    return NULL;
+    return 0;
   }
   s->nelems = nelems;
   s->hist = new_fvec(nelems);

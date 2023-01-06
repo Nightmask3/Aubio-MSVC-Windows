@@ -48,9 +48,9 @@ aubio_dct_accelerate_t * new_aubio_dct_accelerate (uint_t size) {
     goto beach;
   }
 
-  s->setup = vDSP_DCT_CreateSetup(NULL, (vDSP_Length)size, vDSP_DCT_II);
-  s->setupInv = vDSP_DCT_CreateSetup(NULL, (vDSP_Length)size, vDSP_DCT_III);
-  if (s->setup == NULL || s->setupInv == NULL) {
+  s->setup = vDSP_DCT_CreateSetup(0, (vDSP_Length)size, vDSP_DCT_II);
+  s->setupInv = vDSP_DCT_CreateSetup(0, (vDSP_Length)size, vDSP_DCT_III);
+  if (s->setup == 0 || s->setupInv == 0) {
     goto beach;
   }
 
@@ -60,7 +60,7 @@ aubio_dct_accelerate_t * new_aubio_dct_accelerate (uint_t size) {
 
 beach:
   del_aubio_dct_accelerate(s);
-  return NULL;
+  return 0;
 }
 
 void del_aubio_dct_accelerate(aubio_dct_accelerate_t *s) {

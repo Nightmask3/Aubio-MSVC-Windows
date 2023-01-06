@@ -18,6 +18,7 @@
 
 */
 
+
 #ifndef AUBIO_LOG_H
 #define AUBIO_LOG_H
 
@@ -67,7 +68,7 @@ typedef void (*aubio_log_function_t)(sint_t level, const char_t *message, void
 /** Set logging function for all levels
 
   \param fun the function to be used to log, of type ::aubio_log_function_t
-  \param data optional closure to be passed to the function (can be NULL if
+  \param data optional closure to be passed to the function (can be 0 if
   nothing to pass)
 
  */
@@ -77,7 +78,7 @@ void aubio_log_set_function(aubio_log_function_t fun, void* data);
 
   \param level the level for which to set the logging function
   \param fun the function to be used to log, of type ::aubio_log_function_t
-  \param data optional closure to be passed to the function (can be NULL if
+  \param data optional closure to be passed to the function (can be 0 if
   nothing to pass)
 
 */

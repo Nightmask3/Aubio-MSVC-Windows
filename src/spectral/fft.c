@@ -234,7 +234,7 @@ aubio_fft_t * new_aubio_fft (uint_t winsize) {
   s->out = AUBIO_ARRAY(smpl_t, s->fft_size);
   s->spec.realp = AUBIO_ARRAY(smpl_t, s->fft_size/2);
   s->spec.imagp = AUBIO_ARRAY(smpl_t, s->fft_size/2);
-  s->fftSetupFwd = aubio_vDSP_DFT_zrop_CreateSetup(NULL,
+  s->fftSetupFwd = aubio_vDSP_DFT_zrop_CreateSetup(0,
       s->fft_size, vDSP_DFT_FORWARD);
   s->fftSetupBwd = aubio_vDSP_DFT_zrop_CreateSetup(s->fftSetupFwd,
       s->fft_size, vDSP_DFT_INVERSE);
@@ -296,7 +296,7 @@ aubio_fft_t * new_aubio_fft (uint_t winsize) {
 
 beach:
   AUBIO_FREE(s);
-  return NULL;
+  return 0;
 }
 
 void del_aubio_fft(aubio_fft_t * s) {

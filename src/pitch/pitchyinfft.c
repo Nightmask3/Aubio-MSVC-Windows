@@ -68,7 +68,7 @@ new_aubio_pitchyinfft (uint_t samplerate, uint_t bufsize)
   p->yinfft = new_fvec (bufsize / 2 + 1);
   p->tol = 0.85;
   p->peak_pos = 0;
-  p->win = new_aubio_window ("hanningz", bufsize);
+  p->win = new_aubio_window ((char *)"hanningz", bufsize);
   p->weight = new_fvec (bufsize / 2 + 1);
   for (i = 0; i < p->weight->length; i++) {
     freq = (smpl_t) i / (smpl_t) bufsize *(smpl_t) samplerate;
@@ -104,7 +104,7 @@ new_aubio_pitchyinfft (uint_t samplerate, uint_t bufsize)
 beach:
   if (p->winput) del_fvec(p->winput);
   AUBIO_FREE(p);
-  return NULL;
+  return 0;
 }
 
 void

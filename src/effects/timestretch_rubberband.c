@@ -100,7 +100,7 @@ new_aubio_timestretch (const char_t * mode, smpl_t stretchratio, uint_t hopsize,
 
 beach:
   del_aubio_timestretch(p);
-  return NULL;
+  return 0;
 }
 
 #if 0

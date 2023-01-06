@@ -31,8 +31,8 @@
 
   When creating a new source using ::new_aubio_source, the new function of each
   of the compiled-in sources will be used, in the following order, until one of
-  them gets successfully created. If all sources returned NULL,
-  ::new_aubio_source will return NULL.
+  them gets successfully created. If all sources returned 0,
+  ::new_aubio_source will return 0.
 
   \b \p source_avcodec : libav
 

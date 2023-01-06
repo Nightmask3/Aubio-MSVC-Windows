@@ -76,7 +76,7 @@ new_aubio_spectral_whitening (uint_t buf_size, uint_t hop_size, uint_t samplerat
 
 beach:
   AUBIO_FREE(o);
-  return NULL;
+  return 0;
 }
 
 uint_t

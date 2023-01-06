@@ -81,7 +81,7 @@ static unsigned char *write_little_endian (unsigned int s, unsigned char *str,
 aubio_sink_wavwrite_t * new_aubio_sink_wavwrite(const char_t * path, uint_t samplerate) {
   aubio_sink_wavwrite_t * s = AUBIO_NEW(aubio_sink_wavwrite_t);
 
-  if (path == NULL) {
+  if (path == 0) {
     AUBIO_ERR("sink_wavwrite: Aborted opening null path\n");
     goto beach;
   }
@@ -118,7 +118,7 @@ beach:
   //AUBIO_ERR("sink_wavwrite: failed creating %s with samplerate %dHz\n",
   //    s->path, s->samplerate);
   del_aubio_sink_wavwrite(s);
-  return NULL;
+  return 0;
 }
 
 uint_t aubio_sink_wavwrite_preset_samplerate(aubio_sink_wavwrite_t *s, uint_t samplerate)
@@ -215,7 +215,7 @@ uint_t aubio_sink_wavwrite_open(aubio_sink_wavwrite_t *s) {
     AUBIO_STRERR("sink_wavwrite: writing header to %s failed"
         " (wrote %d/%d, %s)\n", s->path, written, 13, errorstr);
     fclose(s->fid);
-    s->fid = NULL;
+    s->fid = 0;
     return AUBIO_FAIL;
   }
 
@@ -298,7 +298,7 @@ uint_t aubio_sink_wavwrite_close(aubio_sink_wavwrite_t * s) {
   if (fclose(s->fid)) {
     AUBIO_STRERR("sink_wavwrite: Error closing file %s (%s)\n", s->path, errorstr);
   }
-  s->fid = NULL;
+  s->fid = 0;
   return AUBIO_OK;
 }
 

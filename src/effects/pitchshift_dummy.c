@@ -43,7 +43,7 @@ aubio_pitchshift_t *new_aubio_pitchshift (const char_t * method UNUSED,
     smpl_t pitchscale UNUSED, uint_t hop_size UNUSED, uint_t samplerate UNUSED)
 {
   AUBIO_ERR ("aubio was not compiled with rubberband\n");
-  return NULL;
+  return 0;
 }
 
 uint_t aubio_pitchshift_set_pitchscale (aubio_pitchshift_t * o UNUSED, smpl_t pitchscale UNUSED)

@@ -58,7 +58,7 @@ aubio_source_apple_audio_t * new_aubio_source_apple_audio(const char_t * path, u
 {
   aubio_source_apple_audio_t * s = AUBIO_NEW(aubio_source_apple_audio_t);
 
-  if (path == NULL || strnlen(path, PATH_MAX) < 1) {
+  if (path == 0 || strnlen(path, PATH_MAX) < 1) {
     AUBIO_ERROR("source_apple_audio: Aborted opening null path\n");
     goto beach;
   }
@@ -85,7 +85,7 @@ aubio_source_apple_audio_t * new_aubio_source_apple_audio(const char_t * path, u
 
 beach:
   del_aubio_source_apple_audio(s);
-  return NULL;
+  return 0;
 }
 
 uint_t aubio_source_apple_audio_open (aubio_source_apple_audio_t *s, const char_t * path)
@@ -256,7 +256,7 @@ uint_t aubio_source_apple_audio_close (aubio_source_apple_audio_t *s)
   OSStatus err = noErr;
   if (!s->audioFile) { return AUBIO_OK; }
   err = ExtAudioFileDispose(s->audioFile);
-  s->audioFile = NULL;
+  s->audioFile = 0;
   if (err) {
     char_t errorstr[20];
     AUBIO_ERROR("source_apple_audio: error while closing %s "

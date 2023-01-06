@@ -34,8 +34,8 @@ aubio_filter_set_c_weighting (aubio_filter_t * f, uint_t samplerate)
     AUBIO_ERROR("aubio_filter: failed setting C-weighting with samplerate %d\n", samplerate);
     return AUBIO_FAIL;
   }
-  if (f == NULL) {
-    AUBIO_ERROR("aubio_filter: failed setting C-weighting with filter NULL\n");
+  if (f == 0) {
+    AUBIO_ERROR("aubio_filter: failed setting C-weighting with filter 0\n");
     return AUBIO_FAIL;
   }
 
@@ -211,7 +211,7 @@ aubio_filter_t * new_aubio_filter_c_weighting (uint_t samplerate) {
   aubio_filter_t * f = new_aubio_filter(5);
   if (aubio_filter_set_c_weighting(f,samplerate) != AUBIO_OK) {
     del_aubio_filter(f);
-    return NULL;
+    return 0;
   }
   return f;
 }

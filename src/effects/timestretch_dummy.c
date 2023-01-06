@@ -46,7 +46,7 @@ new_aubio_timestretch (const char_t * method UNUSED,
     smpl_t pitchscale UNUSED, uint_t hop_size UNUSED, uint_t samplerate UNUSED)
 {
   AUBIO_ERR ("timestretch: aubio was not compiled with rubberband\n");
-  return NULL;
+  return 0;
 }
 
 uint_t aubio_timestretch_set_stretch (aubio_timestretch_t * o UNUSED, smpl_t stretch UNUSED)

@@ -18,6 +18,12 @@
 
 */
 
+#ifndef _CSTDIO_
+#include <cstdio>
+#endif // !_CSTDIO_
+
+#include <cstdarg>
+
 #include "aubio_priv.h"
 #include "log.h"
 
@@ -44,7 +50,7 @@ aubio_default_log(sint_t level, const char_t *message, void * data UNUSED)
 uint_t
 aubio_log(sint_t level, const char_t *fmt, ...)
 {
-  aubio_log_function_t fun = NULL;
+  aubio_log_function_t fun = 0;
 
   va_list args;
   va_start(args, fmt);
@@ -53,10 +59,10 @@ aubio_log(sint_t level, const char_t *fmt, ...)
 
   if ((level >= 0) && (level < AUBIO_LOG_LAST_LEVEL)) {
     fun = aubio_log_function[level];
-    if (fun != NULL) {
+    if (fun != 0) {
       (*fun)(level, aubio_log_buffer, aubio_log_user_data[level]);
     } else {
-      aubio_default_log(level, aubio_log_buffer, NULL);
+      aubio_default_log(level, aubio_log_buffer, 0);
     }
   }
   return AUBIO_FAIL;
@@ -67,14 +73,14 @@ aubio_log_reset(void)
 {
   uint_t i = 0;
   for (i = 0; i < AUBIO_LOG_LAST_LEVEL; i++) {
-    aubio_log_set_level_function(i, aubio_default_log, NULL);
+    aubio_log_set_level_function(i, aubio_default_log, 0);
   }
 }
 
 aubio_log_function_t
 aubio_log_set_level_function(sint_t level, aubio_log_function_t fun, void * data)
 {
-  aubio_log_function_t old = NULL;
+  aubio_log_function_t old = 0;
   if ((level >= 0) && (level < AUBIO_LOG_LAST_LEVEL)) {
     old = aubio_log_function[level];
     aubio_log_function[level] = fun;
@@ -90,3 +96,5 @@ aubio_log_set_function(aubio_log_function_t fun, void * data) {
     aubio_log_set_level_function(i, fun, data);
   }
 }
+
+

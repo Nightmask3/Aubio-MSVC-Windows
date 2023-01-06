@@ -110,7 +110,7 @@ aubio_sink_flac_t * new_aubio_sink_flac (const char_t *uri,
 
 failure:
   del_aubio_sink_flac(s);
-  return NULL;
+  return 0;
 }
 
 void del_aubio_sink_flac (aubio_sink_flac_t *s)
@@ -147,7 +147,7 @@ uint_t aubio_sink_flac_open(aubio_sink_flac_t *s)
     return AUBIO_FAIL;
   }
 
-  if((s->encoder = FLAC__stream_encoder_new()) == NULL) {
+  if((s->encoder = FLAC__stream_encoder_new()) == 0) {
     AUBIO_ERR("sink_flac: failed allocating encoder for %s\n", s->path);
     goto failure;
   }
@@ -201,7 +201,7 @@ uint_t aubio_sink_flac_open(aubio_sink_flac_t *s)
 
   // initialize encoder
   init_status = FLAC__stream_encoder_init_file(s->encoder, s->path,
-      NULL, NULL);
+      0, 0);
       //aubio_sink_flac_callback, s);
   if (init_status == FLAC__STREAM_ENCODER_INIT_STATUS_INVALID_SAMPLE_RATE) {
     AUBIO_ERR("sink_flac: failed initilizing encoder for %s"
@@ -347,7 +347,7 @@ uint_t aubio_sink_flac_close (aubio_sink_flac_t *s)
     AUBIO_STRERR("sink_flac: Error closing file %s (%s)\n", s->path, errorstr);
     ret &= AUBIO_FAIL;
   }
-  s->fid = NULL;
+  s->fid = 0;
 
   return ret;
 }

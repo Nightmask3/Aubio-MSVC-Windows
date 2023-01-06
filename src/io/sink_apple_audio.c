@@ -64,7 +64,7 @@ aubio_sink_apple_audio_t * new_aubio_sink_apple_audio(const char_t * uri, uint_t
   s->max_frames = MAX_SIZE;
   s->async = false;
 
-  if ( (uri == NULL) || (strnlen(uri, PATH_MAX) < 1) ) {
+  if ( (uri == 0) || (strnlen(uri, PATH_MAX) < 1) ) {
     AUBIO_ERROR("sink_apple_audio: Aborted opening null path\n");
     goto beach;
   }
@@ -98,7 +98,7 @@ aubio_sink_apple_audio_t * new_aubio_sink_apple_audio(const char_t * uri, uint_t
   return s;
 beach:
   del_aubio_sink_apple_audio(s);
-  return NULL;
+  return 0;
 }
 
 uint_t aubio_sink_apple_audio_preset_samplerate(aubio_sink_apple_audio_t *s, uint_t samplerate)
@@ -229,7 +229,7 @@ uint_t aubio_sink_apple_audio_open(aubio_sink_apple_audio_t *s) {
   aubio_sink_apple_audio_set_client_format(s, &clientFormat);
 
   OSStatus err = noErr;
-  err = ExtAudioFileCreateWithURL(fileURL, s->fileType, &clientFormat, NULL,
+  err = ExtAudioFileCreateWithURL(fileURL, s->fileType, &clientFormat, 0,
      overwrite ? kAudioFileFlags_EraseFile : 0, &s->audioFile);
   CFRelease(fileURL);
   if (err) {
@@ -351,7 +351,7 @@ uint_t aubio_sink_apple_audio_close(aubio_sink_apple_audio_t * s) {
         "in ExtAudioFileDispose (%s)\n", s->path,
         getPrintableOSStatusError(errorstr, err));
   }
-  s->audioFile = NULL;
+  s->audioFile = 0;
   return err;
 }
 

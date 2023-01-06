@@ -157,18 +157,18 @@ plain:
 beach:
   AUBIO_ERROR("dct: failed creating with size %d, should be > 0\n", size);
   del_aubio_dct(s);
-  return NULL;
+  return 0;
 }
 
 void del_aubio_dct(aubio_dct_t *s) {
-  if (s->dct && s->del_dct) s->del_dct (s->dct);
+  if (s->dct && s->del_dct) s->del_dct ((aubio_dct_t *)s->dct);
   AUBIO_FREE (s);
 }
 
 void aubio_dct_do(aubio_dct_t *s, const fvec_t *input, fvec_t *output) {
-  s->dct_do ((void *)s->dct, input, output);
+  s->dct_do ((aubio_dct_t *)s->dct, input, output);
 }
 
 void aubio_dct_rdo(aubio_dct_t *s, const fvec_t *input, fvec_t *output) {
-  s->dct_rdo ((void *)s->dct, input, output);
+  s->dct_rdo ((aubio_dct_t *)s->dct, input, output);
 }

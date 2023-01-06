@@ -19,7 +19,7 @@
 */
 
 #include "aubio_priv.h"
-
+#include <string.h>
 #ifdef HAVE_WIN_HACKS
 #define strncasecmp _strnicmp
 #endif
@@ -28,7 +28,7 @@ const char_t *aubio_str_get_extension(const char_t *filename)
 {
   // find last occurence of dot character
   const char_t *ext;
-  if (!filename) return NULL;
+  if (!filename) return 0;
   ext = strrchr(filename, '.');
   if (!ext || ext == filename) return "";
   else return ext + 1;
@@ -36,7 +36,7 @@ const char_t *aubio_str_get_extension(const char_t *filename)
 
 uint_t aubio_str_extension_matches(const char_t *ext, const char_t *pattern)
 {
-  return ext && pattern && (strncasecmp(ext, pattern, PATH_MAX) == 0);
+  return ext && pattern && (_strnicmp(ext, pattern, PATH_MAX) == 0);
 }
 
 uint_t aubio_str_path_has_extension(const char_t *filename,

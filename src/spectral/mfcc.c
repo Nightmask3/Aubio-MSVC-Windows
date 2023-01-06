@@ -96,7 +96,7 @@ new_aubio_mfcc (uint_t win_s, uint_t n_filters, uint_t n_coefs,
 
 failure:
   del_aubio_mfcc(mfcc);
-  return NULL;
+  return 0;
 }
 
 void

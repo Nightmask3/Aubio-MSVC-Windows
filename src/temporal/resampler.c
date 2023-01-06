@@ -47,7 +47,7 @@ new_aubio_resampler (smpl_t ratio, uint_t type)
   if (error) {
     AUBIO_ERR ("Failed creating resampler: %s\n", src_strerror (error));
     del_aubio_resampler(s);
-    return NULL;
+    return 0;
   }
   s->proc = AUBIO_NEW (SRC_DATA);
   s->ratio = ratio;
@@ -85,7 +85,7 @@ aubio_resampler_t *
 new_aubio_resampler (smpl_t ratio UNUSED, uint_t type UNUSED)
 {
   AUBIO_ERR ("aubio was not compiled with libsamplerate\n");
-  return NULL;
+  return 0;
 }
 
 void

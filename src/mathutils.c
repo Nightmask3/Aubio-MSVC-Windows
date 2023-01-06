@@ -46,13 +46,13 @@ new_aubio_window (char_t * window_type, uint_t length)
 {
   fvec_t * win = new_fvec (length);
   uint_t err;
-  if (win == NULL) {
-    return NULL;
+  if (win == 0) {
+    return 0;
   }
   err = fvec_set_window (win, window_type);
   if (err != 0) {
     del_fvec(win);
-    return NULL;
+    return 0;
   }
   return win;
 }
@@ -61,7 +61,7 @@ uint_t fvec_set_window (fvec_t *win, char_t *window_type) {
   smpl_t * w = win->data;
   uint_t i, size = win->length;
   aubio_window_type wintype;
-  if (window_type == NULL) {
+  if (window_type == 0) {
       AUBIO_ERR ("window type can not be null.\n");
       return 1;
   } else if (strcmp (window_type, "ones") == 0)

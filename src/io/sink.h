@@ -31,8 +31,8 @@
 
   When creating a new sink using ::new_aubio_sink, the new function of each of
   the compiled-in sinks will be attempted, in the following order, until one of
-  them gets successfully created. If all sinks returned NULL, ::new_aubio_sink
-  will return NULL.
+  them gets successfully created. If all sinks returned 0, ::new_aubio_sink
+  will return 0.
 
   \b \p sink_apple_audio : ExtAudioFileRef
 

@@ -96,7 +96,7 @@ RubberBandOptions aubio_get_rubberband_opts(const char_t *mode)
       AUBIO_ERR("rubberband_utils: failed parsing options\n");
       rboptions = -1;
     }
-    while (*(params + i) != NULL) {
+    while (*(params + i) != 0) {
       if ( strcmp(params[i], "ProcessOffline" ) == 0 )        {
              rboptions = RubberBandOptionProcessOffline;
         // TODO: add wrapper to rb study(smpl_t *input, uint_t write)

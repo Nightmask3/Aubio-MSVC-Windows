@@ -86,7 +86,7 @@ aubio_dct_fftw_t * new_aubio_dct_fftw (uint_t size) {
   return s;
 beach:
   AUBIO_FREE(s);
-  return NULL;
+  return 0;
 }
 
 void del_aubio_dct_fftw(aubio_dct_fftw_t *s) {

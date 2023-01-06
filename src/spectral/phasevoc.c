@@ -44,7 +44,7 @@ struct _aubio_pvoc_t {
 
 
 /** returns data and dataold slided by hop_s */
-static void aubio_pvoc_swapbuffers(aubio_pvoc_t *pv, const fvec_t *new);
+static void aubio_pvoc_swapbuffers(aubio_pvoc_t *pv, const fvec_t *newData);
 
 /** do additive synthesis from 'old' and 'cur' */
 static void aubio_pvoc_addsynth(aubio_pvoc_t *pv, fvec_t * synthnew);
@@ -93,7 +93,7 @@ aubio_pvoc_t * new_aubio_pvoc (uint_t win_s, uint_t hop_s) {
   }
 
   pv->fft      = new_aubio_fft (win_s);
-  if (pv->fft == NULL) {
+  if (pv->fft == 0) {
     goto beach;
   }
 
@@ -109,7 +109,7 @@ aubio_pvoc_t * new_aubio_pvoc (uint_t win_s, uint_t hop_s) {
     pv->dataold  = new_fvec  (1);
     pv->synthold = new_fvec (1);
   }
-  pv->w        = new_aubio_window ("hanningz", win_s);
+  pv->w        = new_aubio_window ((char *)"hanningz", win_s);
 
   pv->hop_s    = hop_s;
   pv->win_s    = win_s;
@@ -140,7 +140,7 @@ aubio_pvoc_t * new_aubio_pvoc (uint_t win_s, uint_t hop_s) {
 
 beach:
   AUBIO_FREE (pv);
-  return NULL;
+  return 0;
 }
 
 uint_t aubio_pvoc_set_window(aubio_pvoc_t *pv, const char_t *window) {
@@ -157,12 +157,12 @@ void del_aubio_pvoc(aubio_pvoc_t *pv) {
   AUBIO_FREE(pv);
 }
 
-static void aubio_pvoc_swapbuffers(aubio_pvoc_t *pv, const fvec_t *new)
+static void aubio_pvoc_swapbuffers(aubio_pvoc_t *pv, const fvec_t *newData)
 {
   /* some convenience pointers */
   smpl_t * data = pv->data->data;
   smpl_t * dataold = pv->dataold->data;
-  smpl_t * datanew = new->data;
+  smpl_t * datanew = newData->data;
 #ifndef HAVE_MEMCPY_HACKS
   uint_t i;
   for (i = 0; i < pv->end; i++)

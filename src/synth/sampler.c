@@ -46,12 +46,12 @@ aubio_sampler_t *new_aubio_sampler(uint_t samplerate, uint_t blocksize)
   s->blocksize = blocksize;
   s->source_output = new_fvec(blocksize);
   s->source_output_multi = new_fmat(4, blocksize);
-  s->source = NULL;
+  s->source = 0;
   s->playing = 0;
   return s;
 beach:
   AUBIO_FREE(s);
-  return NULL;
+  return 0;
 }
 
 uint_t aubio_sampler_load( aubio_sampler_t * o, const char_t * uri )

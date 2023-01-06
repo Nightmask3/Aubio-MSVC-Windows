@@ -127,11 +127,11 @@ uint_t aubio_source_avcodec_has_network_url(aubio_source_avcodec_t *s) {
 aubio_source_avcodec_t * new_aubio_source_avcodec(const char_t * path,
     uint_t samplerate, uint_t hop_size) {
   aubio_source_avcodec_t * s = AUBIO_NEW(aubio_source_avcodec_t);
-  AVFormatContext *avFormatCtx = NULL;
-  AVCodecContext *avCodecCtx = NULL;
-  AVFrame *avFrame = NULL;
+  AVFormatContext *avFormatCtx = 0;
+  AVCodecContext *avCodecCtx = 0;
+  AVFrame *avFrame = 0;
 #if FF_API_INIT_PACKET
-  AVPacket *avPacket = NULL;
+  AVPacket *avPacket = 0;
 #endif
   sint_t selected_stream = -1;
 #if FF_API_LAVF_AVCTX
@@ -141,7 +141,7 @@ aubio_source_avcodec_t * new_aubio_source_avcodec(const char_t * path,
   AVCodec *codec;
   uint_t i;
   int err;
-  if (path == NULL) {
+  if (path == 0) {
     AUBIO_ERR("source_avcodec: Aborted opening null path\n");
     goto beach;
   }
@@ -172,8 +172,8 @@ aubio_source_avcodec_t * new_aubio_source_avcodec(const char_t * path,
   }
 
   // try opening the file and get some info about it
-  avFormatCtx = NULL;
-  if ( (err = avformat_open_input(&avFormatCtx, s->path, NULL, NULL) ) < 0 ) {
+  avFormatCtx = 0;
+  if ( (err = avformat_open_input(&avFormatCtx, s->path, 0, 0) ) < 0 ) {
     char errorstr[256];
     av_strerror (err, errorstr, sizeof(errorstr));
     AUBIO_ERR("source_avcodec: Failed opening %s (%s)\n", s->path, errorstr);
@@ -188,7 +188,7 @@ aubio_source_avcodec_t * new_aubio_source_avcodec(const char_t * path,
 #endif
 
   // retrieve stream information
-  if ( (err = avformat_find_stream_info(avFormatCtx, NULL)) < 0 ) {
+  if ( (err = avformat_find_stream_info(avFormatCtx, 0)) < 0 ) {
     char errorstr[256];
     av_strerror (err, errorstr, sizeof(errorstr));
     AUBIO_ERR("source_avcodec: Could not find stream information "
@@ -223,7 +223,7 @@ aubio_source_avcodec_t * new_aubio_source_avcodec(const char_t * path,
 
 #if FF_API_LAVF_AVCTX
   codecpar = avFormatCtx->streams[selected_stream]->codecpar;
-  if (codecpar == NULL) {
+  if (codecpar == 0) {
     AUBIO_ERR("source_avcodec: Could not find decoder for %s", s->path);
     goto beach;
   }
@@ -241,7 +241,7 @@ aubio_source_avcodec_t * new_aubio_source_avcodec(const char_t * path,
   avCodecCtx = avFormatCtx->streams[selected_stream]->codec;
   codec = avcodec_find_decoder(avCodecCtx->codec_id);
 #endif
-  if (codec == NULL) {
+  if (codec == 0) {
     AUBIO_ERR("source_avcodec: Could not find decoder for %s", s->path);
     goto beach;
   }
@@ -261,7 +261,7 @@ aubio_source_avcodec_t * new_aubio_source_avcodec(const char_t * path,
 #endif
 #endif
 
-  if ( ( err = avcodec_open2(avCodecCtx, codec, NULL) ) < 0) {
+  if ( ( err = avcodec_open2(avCodecCtx, codec, 0) ) < 0) {
     char errorstr[256];
     av_strerror (err, errorstr, sizeof(errorstr));
     AUBIO_ERR("source_avcodec: Could not load codec for %s (%s)\n", s->path,
@@ -316,7 +316,7 @@ aubio_source_avcodec_t * new_aubio_source_avcodec(const char_t * path,
 
   aubio_source_avcodec_reset_resampler(s);
 
-  if (s->avr == NULL) goto beach;
+  if (s->avr == 0) goto beach;
 
   s->eof = 0;
 
@@ -328,13 +328,13 @@ beach:
   //AUBIO_ERR("can not read %s at samplerate %dHz with a hop_size of %d\n",
   //    s->path, s->samplerate, s->hop_size);
   del_aubio_source_avcodec(s);
-  return NULL;
+  return 0;
 }
 
 void aubio_source_avcodec_reset_resampler(aubio_source_avcodec_t * s)
 {
   // create or reset resampler to/from mono/multi-channel
-  if ( s->avr == NULL ) {
+  if ( s->avr == 0 ) {
     int err;
     int64_t input_layout = av_get_default_channel_layout(s->input_channels);
     int64_t output_layout = av_get_default_channel_layout(s->input_channels);
@@ -604,7 +604,7 @@ uint_t aubio_source_avcodec_seek (aubio_source_avcodec_t * s, uint_t pos) {
   int64_t max_ts = MIN(resampled_pos + 2000, INT64_MAX);
   int seek_flags = AVSEEK_FLAG_FRAME | AVSEEK_FLAG_ANY;
   int ret = AUBIO_FAIL;
-  if (s->avFormatCtx != NULL && s->avr != NULL) {
+  if (s->avFormatCtx != 0 && s->avr != 0) {
     ret = AUBIO_OK;
   } else {
     AUBIO_ERR("source_avcodec: failed seeking in %s (file not opened?)",
@@ -638,7 +638,7 @@ uint_t aubio_source_avcodec_seek (aubio_source_avcodec_t * s, uint_t pos) {
 }
 
 uint_t aubio_source_avcodec_get_duration (aubio_source_avcodec_t * s) {
-  if (s && &(s->avFormatCtx) != NULL) {
+  if (s && &(s->avFormatCtx) != 0) {
     int64_t duration = s->avFormatCtx->duration;
     return s->samplerate * ((uint_t)duration / 1e6 );
   }
@@ -646,7 +646,7 @@ uint_t aubio_source_avcodec_get_duration (aubio_source_avcodec_t * s) {
 }
 
 uint_t aubio_source_avcodec_close(aubio_source_avcodec_t * s) {
-  if (s->avr != NULL) {
+  if (s->avr != 0) {
 #ifdef HAVE_AVRESAMPLE
     avresample_close( s->avr );
     av_free ( s->avr );
@@ -655,18 +655,18 @@ uint_t aubio_source_avcodec_close(aubio_source_avcodec_t * s) {
     swr_free ( &s->avr );
 #endif
   }
-  s->avr = NULL;
-  if (s->avCodecCtx != NULL) {
+  s->avr = 0;
+  if (s->avCodecCtx != 0) {
 #ifndef HAVE_AUBIO_LIBAVCODEC_DEPRECATED
     avcodec_free_context( &s->avCodecCtx );
 #else
     avcodec_close ( s->avCodecCtx );
 #endif
   }
-  s->avCodecCtx = NULL;
-  if (s->avFormatCtx != NULL) {
+  s->avCodecCtx = 0;
+  if (s->avFormatCtx != 0) {
     avformat_close_input(&s->avFormatCtx);
-    s->avFormatCtx = NULL;
+    s->avFormatCtx = 0;
   }
 #if FF_API_INIT_PACKET
   if (s->avPacket) {
@@ -681,24 +681,24 @@ uint_t aubio_source_avcodec_close(aubio_source_avcodec_t * s) {
 void del_aubio_source_avcodec(aubio_source_avcodec_t * s){
   AUBIO_ASSERT(s);
   aubio_source_avcodec_close(s);
-  if (s->output != NULL) {
+  if (s->output != 0) {
     av_free(s->output);
   }
-  s->output = NULL;
-  if (s->avFrame != NULL) {
+  s->output = 0;
+  if (s->avFrame != 0) {
     av_frame_free( &(s->avFrame) );
   }
-  s->avFrame = NULL;
+  s->avFrame = 0;
 #if FF_API_INIT_PACKET
-  if (s->avPacket != NULL) {
+  if (s->avPacket != 0) {
     av_packet_free( &(s->avPacket) );
   }
-  s->avPacket = NULL;
+  s->avPacket = 0;
 #endif
   if (s->path) {
     AUBIO_FREE(s->path);
   }
-  s->path = NULL;
+  s->path = 0;
   AUBIO_FREE(s);
 }
 

@@ -62,7 +62,7 @@ new_aubio_pitchyinfast (uint_t bufsize)
       || !o->kernel || !o->samples_fft || !o->kernel || !o->fft)
   {
     del_aubio_pitchyinfast(o);
-    return NULL;
+    return 0;
   }
   o->tol = 0.15;
   o->peak_pos = 0;

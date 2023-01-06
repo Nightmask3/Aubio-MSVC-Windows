@@ -226,7 +226,7 @@ aubio_tempo_t * new_aubio_tempo (const char_t * tempo_mode,
 
 beach:
   del_aubio_tempo(o);
-  return NULL;
+  return 0;
 }
 
 smpl_t aubio_tempo_get_bpm(aubio_tempo_t *o) {

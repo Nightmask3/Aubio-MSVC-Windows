@@ -47,7 +47,7 @@ typedef struct _aubio_tempo_t aubio_tempo_t;
   \param hop_size number of frames between two consecutive runs
   \param samplerate sampling rate of the signal to analyze
 
-  \return newly created ::aubio_tempo_t if successful, `NULL` otherwise
+  \return newly created ::aubio_tempo_t if successful, `0` otherwise
 
 */
 aubio_tempo_t * new_aubio_tempo (const char_t * method,

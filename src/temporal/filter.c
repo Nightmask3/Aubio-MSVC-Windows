@@ -136,7 +136,7 @@ new_aubio_filter (uint_t order)
   aubio_filter_t *f = AUBIO_NEW (aubio_filter_t);
   if ((sint_t)order < 1) {
     AUBIO_FREE(f);
-    return NULL;
+    return 0;
   }
   f->x = new_lvec (order);
   f->y = new_lvec (order);

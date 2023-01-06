@@ -83,12 +83,12 @@ aubio_notes_t * new_aubio_notes (const char_t * method,
   o->isready = 0;
 
   o->onset = new_aubio_onset (onset_method, o->onset_buf_size, o->hop_size, o->samplerate);
-  if (o->onset == NULL) goto fail;
+  if (o->onset == 0) goto fail;
   if (o->onset_threshold != 0.) aubio_onset_set_threshold (o->onset, o->onset_threshold);
   o->onset_output = new_fvec (1);
 
   o->pitch = new_aubio_pitch (pitch_method, o->pitch_buf_size, o->hop_size, o->samplerate);
-  if (o->pitch == NULL) goto fail;
+  if (o->pitch == 0) goto fail;
   if (o->pitch_tolerance != 0.) aubio_pitch_set_tolerance (o->pitch, o->pitch_tolerance);
   aubio_pitch_set_unit (o->pitch, "midi");
   o->pitch_output = new_fvec (1);
@@ -116,7 +116,7 @@ aubio_notes_t * new_aubio_notes (const char_t * method,
 
 fail:
   del_aubio_notes(o);
-  return NULL;
+  return 0;
 }
 
 uint_t aubio_notes_set_silence(aubio_notes_t *o, smpl_t silence)

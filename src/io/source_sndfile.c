@@ -71,7 +71,7 @@ aubio_source_sndfile_t * new_aubio_source_sndfile(const char_t * path, uint_t sa
   aubio_source_sndfile_t * s = AUBIO_NEW(aubio_source_sndfile_t);
   SF_INFO sfinfo;
 
-  if (path == NULL) {
+  if (path == 0) {
     AUBIO_ERR("source_sndfile: Aborted opening null path\n");
     goto beach;
   }
@@ -94,10 +94,10 @@ aubio_source_sndfile_t * new_aubio_source_sndfile(const char_t * path, uint_t sa
   AUBIO_MEMSET(&sfinfo, 0, sizeof (sfinfo));
   s->handle = sf_open (s->path, SFM_READ, &sfinfo);
 
-  if (s->handle == NULL) {
+  if (s->handle == 0) {
     /* show libsndfile err msg */
     AUBIO_ERR("source_sndfile: Failed opening %s (%s)\n", s->path,
-        sf_strerror (NULL));
+        sf_strerror (0));
     goto beach;
   }
 
@@ -124,9 +124,9 @@ aubio_source_sndfile_t * new_aubio_source_sndfile(const char_t * path, uint_t sa
   }
 
 #ifdef HAVE_SAMPLERATE
-  s->input_data = NULL;
-  s->input_mat = NULL;
-  s->resamplers = NULL;
+  s->input_data = 0;
+  s->input_mat = 0;
+  s->resamplers = 0;
   if (s->ratio != 1) {
     uint_t i;
     s->resamplers = AUBIO_ARRAY(aubio_resampler_t*, s->input_channels);
@@ -164,7 +164,7 @@ beach:
   //AUBIO_ERR("can not read %s at samplerate %dHz with a hop_size of %d\n",
   //    s->path, s->samplerate, s->hop_size);
   del_aubio_source_sndfile(s);
-  return NULL;
+  return 0;
 }
 
 void aubio_source_sndfile_do(aubio_source_sndfile_t * s, fvec_t * read_data, uint_t * read){
@@ -290,7 +290,7 @@ uint_t aubio_source_sndfile_get_duration (const aubio_source_sndfile_t * s) {
 uint_t aubio_source_sndfile_seek (aubio_source_sndfile_t * s, uint_t pos) {
   uint_t resampled_pos = (uint_t)ROUND(pos / s->ratio);
   sf_count_t sf_ret;
-  if (s->handle == NULL) {
+  if (s->handle == 0) {
     AUBIO_ERR("source_sndfile: failed seeking in %s (file not opened?)\n",
         s->path);
     return AUBIO_FAIL;
@@ -302,12 +302,12 @@ uint_t aubio_source_sndfile_seek (aubio_source_sndfile_t * s, uint_t pos) {
   }
   sf_ret = sf_seek (s->handle, resampled_pos, SEEK_SET);
   if (sf_ret == -1) {
-    AUBIO_ERR("source_sndfile: Failed seeking %s at %d: %s\n", s->path, pos, sf_strerror (NULL));
+    AUBIO_ERR("source_sndfile: Failed seeking %s at %d: %s\n", s->path, pos, sf_strerror (0));
     return AUBIO_FAIL;
   }
   if (sf_ret != resampled_pos) {
     AUBIO_ERR("source_sndfile: Tried seeking %s at %d, but got %d: %s\n",
-        s->path, resampled_pos, (uint_t)sf_ret, sf_strerror (NULL));
+        s->path, resampled_pos, (uint_t)sf_ret, sf_strerror (0));
     return AUBIO_FAIL;
   }
   return AUBIO_OK;
@@ -318,10 +318,10 @@ uint_t aubio_source_sndfile_close (aubio_source_sndfile_t *s) {
     return AUBIO_OK;
   }
   if(sf_close(s->handle)) {
-    AUBIO_ERR("source_sndfile: Error closing file %s: %s\n", s->path, sf_strerror (NULL));
+    AUBIO_ERR("source_sndfile: Error closing file %s: %s\n", s->path, sf_strerror (0));
     return AUBIO_FAIL;
   }
-  s->handle = NULL;
+  s->handle = 0;
   return AUBIO_OK;
 }
 
@@ -329,10 +329,10 @@ void del_aubio_source_sndfile(aubio_source_sndfile_t * s){
   AUBIO_ASSERT(s);
   aubio_source_sndfile_close(s);
 #ifdef HAVE_SAMPLERATE
-  if (s->resamplers != NULL) {
+  if (s->resamplers != 0) {
     uint_t i = 0, input_channels = s->input_channels;
     for (i = 0; i < input_channels; i ++) {
-      if (s->resamplers[i] != NULL) {
+      if (s->resamplers[i] != 0) {
         del_aubio_resampler(s->resamplers[i]);
       }
     }

@@ -77,7 +77,7 @@ aubio_dct_plain_t * new_aubio_dct_plain (uint_t size) {
   return s;
 failure:
   del_aubio_dct_plain(s);
-  return NULL;
+  return 0;
 }
 
 void del_aubio_dct_plain (aubio_dct_plain_t *s) {

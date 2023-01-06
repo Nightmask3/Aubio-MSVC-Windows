@@ -27,10 +27,10 @@ void freeAudioBufferList(AudioBufferList *bufferList) {
   for (i = 0; i < bufferList->mNumberBuffers; i++) {
     if (bufferList->mBuffers[i].mData) {
       AUBIO_FREE(bufferList->mBuffers[i].mData);
-      bufferList->mBuffers[i].mData = NULL;
+      bufferList->mBuffers[i].mData = 0;
     }
   }
-  bufferList = NULL;
+  bufferList = 0;
 }
 
 CFURLRef createURLFromPath(const char * path) {

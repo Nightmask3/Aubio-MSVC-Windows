@@ -24,7 +24,7 @@
 cvec_t * new_cvec(uint_t length) {
   cvec_t * s;
   if ((sint_t)length <= 0) {
-    return NULL;
+    return 0;
   }
   s = AUBIO_NEW(cvec_t);
   s->length = length/2 + 1;

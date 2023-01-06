@@ -156,7 +156,7 @@ sint_t aubio_audio_unit_init (aubio_audio_unit_t *o)
   o->au_ios_cb_struct.inputProcRefCon = o;
 
   /* setting up audio session with interruption listener */
-  err = AudioSessionInitialize(NULL, NULL, audio_unit_interruption_listener, o);
+  err = AudioSessionInitialize(0, 0, audio_unit_interruption_listener, o);
   if (err) { AUBIO_ERR("audio_unit: could not initialize audio session (%d)\n", (int)err); goto fail; }
 
   audio_unit_set_audio_session_category(o->input_enabled, o->verbose);
@@ -190,7 +190,7 @@ sint_t aubio_audio_unit_init (aubio_audio_unit_t *o)
   AudioStreamBasicDescription audioFormat;
 
   /* look for a component that match the description */
-  AudioComponent comp = AudioComponentFindNext(NULL, &desc);
+  AudioComponent comp = AudioComponentFindNext(0, &desc);
 
   /* create the audio component */
   AudioUnit *audio_unit = &(o->audio_unit);
@@ -527,7 +527,7 @@ sint_t aubio_audio_unit_start(aubio_audio_unit_t *o) {
 
 sint_t aubio_audio_unit_stop(aubio_audio_unit_t *o)
 {
-  if (o->audio_unit == NULL) return -1;
+  if (o->audio_unit == 0) return -1;
   OSStatus err = AudioOutputUnitStop (o->audio_unit);
   if (err) { AUBIO_WRN("audio_unit: failed stopping audio unit (%d)\n", (int)err); }
   err = AudioUnitUninitialize (o->audio_unit);
@@ -642,7 +642,7 @@ void audio_unit_check_audio_route(aubio_audio_unit_t *o) {
   if (err) { AUBIO_ERR("audio_unit: could not get current route\n"); goto fail; }
   else {
     char *route = (char *)CFStringGetCStringPtr ( currentRoute, kCFStringEncodingUTF8);
-    if (route == NULL) {
+    if (route == 0) {
       int bufferSize = 25;
       route = calloc(bufferSize, sizeof(char));
       CFStringGetCString ( currentRoute, route, bufferSize,
@@ -764,12 +764,12 @@ uint_t del_aubio_audio_unit(aubio_audio_unit_t *o)
   int err = 0;
   err = aubio_audio_unit_stop(o);
   if (o->au_ios_inbuf) free(o->au_ios_inbuf);
-  o->au_ios_inbuf = NULL;
+  o->au_ios_inbuf = 0;
   if (o->au_ios_outbuf) free(o->au_ios_outbuf);
-  o->au_ios_outbuf = NULL;
+  o->au_ios_outbuf = 0;
   del_fmat (o->input_frames);
   del_fmat (o->output_frames);
-  o->audio_unit = NULL;
+  o->audio_unit = 0;
   return (int)err;
 }
 

@@ -183,40 +183,40 @@ aubio_sink_t * new_aubio_sink(const char_t * uri, uint_t samplerate) {
   AUBIO_ERROR("sink: failed creating '%s' at %dHz (no sink built-in)\n", uri, samplerate);
 #endif
   del_aubio_sink(s);
-  return NULL;
+  return 0;
 }
 
 void aubio_sink_do(aubio_sink_t * s, fvec_t * write_data, uint_t write) {
-  s->s_do((void *)s->sink, write_data, write);
+  s->s_do((aubio_sink_t*)s->sink, write_data, write);
 }
 
 void aubio_sink_do_multi(aubio_sink_t * s, fmat_t * write_data, uint_t write) {
-  s->s_do_multi((void *)s->sink, write_data, write);
+  s->s_do_multi((aubio_sink_t*)s->sink, write_data, write);
 }
 
 uint_t aubio_sink_preset_samplerate(aubio_sink_t * s, uint_t samplerate) {
-  return s->s_preset_samplerate((void *)s->sink, samplerate);
+  return s->s_preset_samplerate((aubio_sink_t*)s->sink, samplerate);
 }
 
 uint_t aubio_sink_preset_channels(aubio_sink_t * s, uint_t channels) {
-  return s->s_preset_channels((void *)s->sink, channels);
+  return s->s_preset_channels((aubio_sink_t*)s->sink, channels);
 }
 
 uint_t aubio_sink_get_samplerate(const aubio_sink_t * s) {
-  return s->s_get_samplerate((void *)s->sink);
+  return s->s_get_samplerate((aubio_sink_t*)s->sink);
 }
 
 uint_t aubio_sink_get_channels(const aubio_sink_t * s) {
-  return s->s_get_channels((void *)s->sink);
+  return s->s_get_channels((aubio_sink_t*)s->sink);
 }
 
 uint_t aubio_sink_close(aubio_sink_t *s) {
-  return s->s_close((void *)s->sink);
+  return s->s_close((aubio_sink_t*)s->sink);
 }
 
 void del_aubio_sink(aubio_sink_t * s) {
   //AUBIO_ASSERT(s);
   if (s && s->s_del && s->sink)
-    s->s_del((void *)s->sink);
+    s->s_del((aubio_sink_t*)s->sink);
   AUBIO_FREE(s);
 }

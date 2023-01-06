@@ -71,7 +71,7 @@ uint_t aubio_wavetable_load( aubio_wavetable_t * o, const char_t * uri );
 
 This function adds the new samples from the playing wavetable to the output.
 
-If `input` is not NULL and different from `output`, then the samples from `input`
+If `input` is not 0 and different from `output`, then the samples from `input`
 are added to the output.
 
 */
@@ -85,7 +85,7 @@ void aubio_wavetable_do ( aubio_wavetable_t * o, const fvec_t * input, fvec_t * 
 
 This function adds the new samples from the playing wavetable to the output.
 
-If `input` is not NULL and different from `output`, then the samples from `input`
+If `input` is not 0 and different from `output`, then the samples from `input`
 are added to the output.
 
 */

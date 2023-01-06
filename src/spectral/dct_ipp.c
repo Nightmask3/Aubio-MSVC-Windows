@@ -88,7 +88,7 @@ aubio_dct_ipp_t * new_aubio_dct_ipp (uint_t size) {
   if (pSpecSize > 0) {
     s->pSpecBuffer = ippsMalloc_8u(pSpecBufferSize);
   } else {
-    s->pSpecBuffer = NULL;
+    s->pSpecBuffer = 0;
   }
   s->pBuffer = ippsMalloc_8u(pBufferSize);
 
@@ -122,7 +122,7 @@ aubio_dct_ipp_t * new_aubio_dct_ipp (uint_t size) {
 
 beach:
   del_aubio_dct_ipp(s);
-  return NULL;
+  return 0;
 }
 
 void del_aubio_dct_ipp(aubio_dct_ipp_t *s) {

@@ -64,7 +64,7 @@ aubio_wavetable_t *new_aubio_wavetable(uint_t samplerate, uint_t blocksize)
   return s;
 beach:
   AUBIO_FREE(s);
-  return NULL;
+  return 0;
 }
 
 static smpl_t interp_2(const fvec_t *input, smpl_t pos) {

@@ -272,7 +272,7 @@ aubio_onset_t * new_aubio_onset (const char_t * onset_mode,
 
 beach:
   del_aubio_onset(o);
-  return NULL;
+  return 0;
 }
 
 void aubio_onset_reset (aubio_onset_t *o) {

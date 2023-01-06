@@ -299,7 +299,7 @@ new_aubio_specdesc (const char_t * onset_mode, uint_t size){
       AUBIO_ERR("specdesc: unknown spectral descriptor type '%s'\n",
           onset_mode);
       AUBIO_FREE(o);
-      return NULL;
+      return 0;
   }
   switch(onset_type) {
     /* for both energy and hfc, only fftgrain->norm is required */

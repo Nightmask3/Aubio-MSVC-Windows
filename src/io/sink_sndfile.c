@@ -61,7 +61,7 @@ aubio_sink_sndfile_t * new_aubio_sink_sndfile(const char_t * path, uint_t sample
   aubio_sink_sndfile_t * s = AUBIO_NEW(aubio_sink_sndfile_t);
   s->max_size = MAX_SIZE;
 
-  if (path == NULL) {
+  if (path == 0) {
     AUBIO_ERR("sink_sndfile: Aborted opening null path\n");
     goto beach;
   }
@@ -93,7 +93,7 @@ aubio_sink_sndfile_t * new_aubio_sink_sndfile(const char_t * path, uint_t sample
 
 beach:
   del_aubio_sink_sndfile(s);
-  return NULL;
+  return 0;
 }
 
 uint_t aubio_sink_sndfile_preset_samplerate(aubio_sink_sndfile_t *s, uint_t samplerate)
@@ -167,10 +167,10 @@ uint_t aubio_sink_sndfile_open(aubio_sink_sndfile_t *s) {
   /* try creating the file */
   s->handle = sf_open (s->path, SFM_WRITE, &sfinfo);
 
-  if (s->handle == NULL) {
+  if (s->handle == 0) {
     /* show libsndfile err msg */
     AUBIO_ERR("sink_sndfile: Failed opening \"%s\" with %d channels, %dHz: %s\n",
-        s->path, s->channels, s->samplerate, sf_strerror (NULL));
+        s->path, s->channels, s->samplerate, sf_strerror (0));
     return AUBIO_FAIL;
   }
 
@@ -238,10 +238,10 @@ uint_t aubio_sink_sndfile_close (aubio_sink_sndfile_t *s) {
     return AUBIO_FAIL;
   }
   if (sf_close(s->handle)) {
-    AUBIO_ERR("sink_sndfile: Error closing file %s: %s", s->path, sf_strerror (NULL));
+    AUBIO_ERR("sink_sndfile: Error closing file %s: %s", s->path, sf_strerror (0));
     return AUBIO_FAIL;
   }
-  s->handle = NULL;
+  s->handle = 0;
   return AUBIO_OK;
 }
 
